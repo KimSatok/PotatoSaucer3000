@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PotatoSaucer3000</string>
+    <string name="text_title">PotatoSaucer3000</string>
+    <string name="text_oamkproject">OAMK Summer Project 2021</string>
+    <string name="buttontext_play">New Game</string>
+    <string name="buttontext_highscores">Highscores</string>
+    <string name="buttontext_quit">Quit</string>
+</resources>
