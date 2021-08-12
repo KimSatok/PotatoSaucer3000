@@ -1,26 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.MainFragment">
 
+
+    <Button
+        android:id="@+id/btnBack1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/buttontext_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.2" />
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:id="@+id/backtomenu">
+        app:layout_constraintEnd_toStartOf="@+id/btnBack2"
+        app:layout_constraintStart_toEndOf="@+id/btnBack1"
+        android:orientation="vertical">
         <TextView
-            android:id="@+id/item_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
-
+            android:id="@+id/titlescores"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="@string/scores_title"
+            android:layout_marginTop="36dp"
+            android:textSize="30sp"
+            />
         <TextView
-            android:id="@+id/content"
-            android:layout_width="wrap_content"
+            android:id="@+id/highscores"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem" />
+            android:layout_weight=".7"
+            android:gravity="center"
+            android:text="1st 15363\n\n2nd 4362\n\n3rd 1234\n\n4th 1001\n\n5th 102"
+            />
     </LinearLayout>
-</LinearLayout>
+
+    <Button
+        android:id="@+id/btnBack2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/buttontext_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.2" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

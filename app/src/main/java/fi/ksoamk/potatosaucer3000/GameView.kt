@@ -1,7 +1,6 @@
 import android.app.Activity
 import android.content.Context
 import android.graphics.*
-import android.graphics.Color.BLACK
 import android.graphics.Color.WHITE
 import android.view.MotionEvent
 import android.view.View
@@ -9,6 +8,9 @@ import fi.ksoamk.potatosaucer3000.R
 
 
 class GameView(context: Context?) : View(context) {
+
+
+    var scoreupdated: Boolean = false
     var screenWidth: Int
     var screenHeight: Int
     var newWidth: Int
@@ -214,8 +216,8 @@ class GameView(context: Context?) : View(context) {
                     if (playerY < 0) {
                         playerY = 0f
                     }
-                    if (playerY > boundaryY - (player[0]!!.height*2)) {
-                        playerY = (boundaryY - (player[0]!!.height*2)).toFloat()
+                    if (playerY > boundaryY - (player[0]!!.height * 2)) {
+                        playerY = (boundaryY - (player[0]!!.height * 2)).toFloat()
                     }
                     return true
                 }
@@ -523,7 +525,7 @@ class GameView(context: Context?) : View(context) {
 
                 //hit detection
                 if (balloonX < playerX + player[0]!!.width && balloonX + balloon.width > playerX
-                        && balloonY < playerY + player[0]!!.height && balloonY + balloon.height > playerY
+                    && balloonY < playerY + player[0]!!.height && balloonY + balloon.height > playerY
                 ) {
                     balloonY = -150f
                     balloonX = playerX
@@ -533,43 +535,44 @@ class GameView(context: Context?) : View(context) {
                     }
                 }//end of balloon hit start of mini hit
                 if (mini1X < playerX + player[0]!!.width && mini1X + mini[0]!!.width > playerX
-                        && mini1Y < playerY + player[0]!!.height && mini1Y + mini[0]!!.height > playerY
+                    && mini1Y < playerY + player[0]!!.height && mini1Y + mini[0]!!.height > playerY
                 ) {
                     mini1Y = Math.floor(Math.random() * (screenHeight - mini[0]!!.height)).toFloat()
                     mini1X = 0 - mini[0]!!.width.toFloat()
                     playerarmor -= 1
                 }
                 if (mini2X < playerX + player[0]!!.width && mini2X + mini[0]!!.width > playerX
-                        && mini2Y < playerY + player[0]!!.height && mini2Y + mini[0]!!.height > playerY
+                    && mini2Y < playerY + player[0]!!.height && mini2Y + mini[0]!!.height > playerY
                 ) {
                     mini2Y = Math.floor(Math.random() * (screenHeight - mini[0]!!.height)).toFloat()
                     mini2X = screenWidth + midi[0]!!.width.toFloat()
                     playerarmor -= 1
                 }//end of mini hit start of midi hit
                 if (midi1X < playerX + player[0]!!.width && midi1X + midi[0]!!.width > playerX
-                        && midi1Y < playerY + player[0]!!.height && midi1Y + midi[0]!!.height > playerY
+                    && midi1Y < playerY + player[0]!!.height && midi1Y + midi[0]!!.height > playerY
                 ) {
                     midi1Y = Math.floor(Math.random() * (screenHeight - midi[0]!!.height)).toFloat()
                     midi1X = screenWidth + midi[0]!!.width.toFloat()
                     playerarmor -= 1
                 }
                 if (midi2X < playerX + player[0]!!.width && midi2X + midi[0]!!.width > playerX
-                        && midi2Y < playerY + player[0]!!.height && midi2Y + midi[0]!!.height > playerY
+                    && midi2Y < playerY + player[0]!!.height && midi2Y + midi[0]!!.height > playerY
                 ) {
                     midi2Y = screenHeight + screenHeight / 4.toFloat()
                     midi2X = Math.floor(Math.random() * (screenWidth - midi[0]!!.width)).toFloat()
                     playerarmor -= 1
                 } //end of midi hit start of maxi hit
                 if (maxiX < playerX + player[0]!!.width && maxiX + maxi[0]!!.width > playerX
-                        && maxiY < playerY + player[0]!!.height && maxiY + maxi[0]!!.height > playerY
+                    && maxiY < playerY + player[0]!!.height && maxiY + maxi[0]!!.height > playerY
                 ) {
                     playerarmor = 0
                 }
                 //pickups
                 if (armorpackX < playerX + player[0]!!.width && armorpackX + armorpack[0]!!.width > playerX
-                        && armorpackY < playerY + player[0]!!.height && armorpackY + armorpack[0]!!.height > playerY
+                    && armorpackY < playerY + player[0]!!.height && armorpackY + armorpack[0]!!.height > playerY
                 ) {
-                    armorpackY = Math.floor(Math.random() * (screenHeight - midi[0]!!.width)).toFloat()
+                    armorpackY =
+                        Math.floor(Math.random() * (screenHeight - midi[0]!!.width)).toFloat()
                     armorpackX = screenWidth * 2.toFloat()
                     if (playerarmor < 5) {
                         playerarmor += 1
@@ -578,7 +581,7 @@ class GameView(context: Context?) : View(context) {
                     }
                 }
                 if (potatoX < playerX + player[0]!!.width && potatoX + potato.width > playerX
-                        && potatoY < playerY + player[0]!!.height && potatoY + potato.height > playerY
+                    && potatoY < playerY + player[0]!!.height && potatoY + potato.height > playerY
                 ) {
                     potatoY = Math.floor(Math.random() * (screenHeight - midi[0]!!.width)).toFloat()
                     potatoX = screenWidth + potato.width.toFloat()
@@ -614,26 +617,50 @@ class GameView(context: Context?) : View(context) {
             }
             3 -> {
                 canvas.drawBitmap(gameover, 0f, 0f, null)
-                scoretext ="Final Score: $playerscore"
+                scoretext = "Final Score: $playerscore"
                 scoretitle = "GAME OVER"
 
-                canvas.drawText(scoretext, (screenWidth/2)-paint.measureText(scoretext), screenHeight/2.toFloat(), paint)
-                canvas.drawText(scoretitle, (screenWidth/2)-paint.measureText(scoretitle), screenHeight/2-paint.textSize*2,paint)
+                if (!scoreupdated) {
+
+                }
+
+                canvas.drawText(
+                    scoretext,
+                    (screenWidth / 2) - paint.measureText(scoretext),
+                    screenHeight / 2.toFloat(),
+                    paint
+                )
+                canvas.drawText(
+                    scoretitle,
+                    (screenWidth / 2) - paint.measureText(scoretitle),
+                    screenHeight / 2 - paint.textSize * 2,
+                    paint
+                )
             }
             4 -> {
                 canvas.drawBitmap(nextlvl, 0f, 0f, null)
                 resetPositions()
-                playerX = (screenWidth / 2)-(player[0]!!.width/2).toFloat()
-                playerY = (screenHeight / 2)+(player[0]!!.height*2).toFloat()
+                playerX = (screenWidth / 2) - (player[0]!!.width / 2).toFloat()
+                playerY = (screenHeight / 2) + (player[0]!!.height * 2).toFloat()
                 playerF++
                 if (playerF == 6) {
                     playerF = 0
                 }
                 canvas.drawBitmap(player[playerF]!!, playerX, playerY, null)
-                scoretext ="Current Score: $playerscore"
+                scoretext = "Current Score: $playerscore"
                 scoretitle = "Flying to next level"
-                canvas.drawText(scoretext, (screenWidth/2)-(paint.measureText(scoretext)/2), screenHeight/2.toFloat(), paint)
-                canvas.drawText(scoretitle, (screenWidth/2)-(paint.measureText(scoretitle)/2), screenHeight/2-paint.textSize*2,paint)
+                canvas.drawText(
+                    scoretext,
+                    (screenWidth / 2) - (paint.measureText(scoretext) / 2),
+                    screenHeight / 2.toFloat(),
+                    paint
+                )
+                canvas.drawText(
+                    scoretitle,
+                    (screenWidth / 2) - (paint.measureText(scoretitle) / 2),
+                    screenHeight / 2 - paint.textSize * 2,
+                    paint
+                )
             }
         }
 

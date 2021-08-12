@@ -27,6 +27,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view: View = inflater.inflate(R.layout.main_fragment, container, false)
+        val lastscore = 0
 
         val intent = Intent(activity, GameActivity::class.java)
         val playbtn = view.findViewById<Button>(R.id.btnPlay)
@@ -38,7 +39,7 @@ class MainFragment : Fragment() {
         }
         //highscore button
         scorebtn.setOnClickListener{
-            (context as MainActivity).changeFragment(ScoreFragment.newInstance(1))
+            (context as MainActivity).changeFragment(ScoreFragment.newInstance(lastscore))
         }
         //quit button
         quitbtn.setOnClickListener{
@@ -47,6 +48,11 @@ class MainFragment : Fragment() {
 
         return view
     }
+
+
+
+
+
 
 
 

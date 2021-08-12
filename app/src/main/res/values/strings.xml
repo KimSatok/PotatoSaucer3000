@@ -5,4 +5,6 @@
     <string name="buttontext_play">New Game</string>
     <string name="buttontext_highscores">Highscores</string>
     <string name="buttontext_quit">Quit</string>
+    <string name="buttontext_back">Main menu</string>
+    <string name="scores_title">Highscores!!!</string>
 </resources>
