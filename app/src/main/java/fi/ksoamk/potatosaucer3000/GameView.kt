@@ -1,10 +1,11 @@
+package fi.ksoamk.potatosaucer3000
+
 import android.app.Activity
 import android.content.Context
 import android.graphics.*
 import android.graphics.Color.WHITE
 import android.view.MotionEvent
 import android.view.View
-import fi.ksoamk.potatosaucer3000.R
 
 
 class GameView(context: Context?) : View(context) {
@@ -114,6 +115,14 @@ class GameView(context: Context?) : View(context) {
         balloonX = Math.floor(Math.random() * (screenWidth - balloon.width)).toFloat()
         balloonY = -120f
     }
+    private fun updateHighScores(){
+        val scores = PTTSaucer.prefs.getString("scores", "0,0,0,0,0")
+        var scoresfromemory = scores?.removeSurrounding("[","]")?.split(",")?.map {it.toInt()}
+        scoresfromemory = scoresfromemory?.plus(playerscore)
+        val sortedscores = scoresfromemory?.sortedDescending()
+        val newscores = "${sortedscores!![0]},${sortedscores!![1]},${sortedscores!![2]},${sortedscores!![3]},${sortedscores!![4]}"
+        PTTSaucer.prefs.edit().putString("scores", newscores).apply()
+    } // called on gameover, saves the scores to sharedpreferences
     private fun quitGame(){
         val activity = context as Activity
         activity.finish()
@@ -525,7 +534,7 @@ class GameView(context: Context?) : View(context) {
 
                 //hit detection
                 if (balloonX < playerX + player[0]!!.width && balloonX + balloon.width > playerX
-                    && balloonY < playerY + player[0]!!.height && balloonY + balloon.height > playerY
+                        && balloonY < playerY + player[0]!!.height && balloonY + balloon.height > playerY
                 ) {
                     balloonY = -150f
                     balloonX = playerX
@@ -535,44 +544,44 @@ class GameView(context: Context?) : View(context) {
                     }
                 }//end of balloon hit start of mini hit
                 if (mini1X < playerX + player[0]!!.width && mini1X + mini[0]!!.width > playerX
-                    && mini1Y < playerY + player[0]!!.height && mini1Y + mini[0]!!.height > playerY
+                        && mini1Y < playerY + player[0]!!.height && mini1Y + mini[0]!!.height > playerY
                 ) {
                     mini1Y = Math.floor(Math.random() * (screenHeight - mini[0]!!.height)).toFloat()
                     mini1X = 0 - mini[0]!!.width.toFloat()
                     playerarmor -= 1
                 }
                 if (mini2X < playerX + player[0]!!.width && mini2X + mini[0]!!.width > playerX
-                    && mini2Y < playerY + player[0]!!.height && mini2Y + mini[0]!!.height > playerY
+                        && mini2Y < playerY + player[0]!!.height && mini2Y + mini[0]!!.height > playerY
                 ) {
                     mini2Y = Math.floor(Math.random() * (screenHeight - mini[0]!!.height)).toFloat()
                     mini2X = screenWidth + midi[0]!!.width.toFloat()
                     playerarmor -= 1
                 }//end of mini hit start of midi hit
                 if (midi1X < playerX + player[0]!!.width && midi1X + midi[0]!!.width > playerX
-                    && midi1Y < playerY + player[0]!!.height && midi1Y + midi[0]!!.height > playerY
+                        && midi1Y < playerY + player[0]!!.height && midi1Y + midi[0]!!.height > playerY
                 ) {
                     midi1Y = Math.floor(Math.random() * (screenHeight - midi[0]!!.height)).toFloat()
                     midi1X = screenWidth + midi[0]!!.width.toFloat()
                     playerarmor -= 1
                 }
                 if (midi2X < playerX + player[0]!!.width && midi2X + midi[0]!!.width > playerX
-                    && midi2Y < playerY + player[0]!!.height && midi2Y + midi[0]!!.height > playerY
+                        && midi2Y < playerY + player[0]!!.height && midi2Y + midi[0]!!.height > playerY
                 ) {
                     midi2Y = screenHeight + screenHeight / 4.toFloat()
                     midi2X = Math.floor(Math.random() * (screenWidth - midi[0]!!.width)).toFloat()
                     playerarmor -= 1
                 } //end of midi hit start of maxi hit
                 if (maxiX < playerX + player[0]!!.width && maxiX + maxi[0]!!.width > playerX
-                    && maxiY < playerY + player[0]!!.height && maxiY + maxi[0]!!.height > playerY
+                        && maxiY < playerY + player[0]!!.height && maxiY + maxi[0]!!.height > playerY
                 ) {
                     playerarmor = 0
                 }
                 //pickups
                 if (armorpackX < playerX + player[0]!!.width && armorpackX + armorpack[0]!!.width > playerX
-                    && armorpackY < playerY + player[0]!!.height && armorpackY + armorpack[0]!!.height > playerY
+                        && armorpackY < playerY + player[0]!!.height && armorpackY + armorpack[0]!!.height > playerY
                 ) {
                     armorpackY =
-                        Math.floor(Math.random() * (screenHeight - midi[0]!!.width)).toFloat()
+                            Math.floor(Math.random() * (screenHeight - midi[0]!!.width)).toFloat()
                     armorpackX = screenWidth * 2.toFloat()
                     if (playerarmor < 5) {
                         playerarmor += 1
@@ -581,7 +590,7 @@ class GameView(context: Context?) : View(context) {
                     }
                 }
                 if (potatoX < playerX + player[0]!!.width && potatoX + potato.width > playerX
-                    && potatoY < playerY + player[0]!!.height && potatoY + potato.height > playerY
+                        && potatoY < playerY + player[0]!!.height && potatoY + potato.height > playerY
                 ) {
                     potatoY = Math.floor(Math.random() * (screenHeight - midi[0]!!.width)).toFloat()
                     potatoX = screenWidth + potato.width.toFloat()
@@ -621,20 +630,21 @@ class GameView(context: Context?) : View(context) {
                 scoretitle = "GAME OVER"
 
                 if (!scoreupdated) {
-
+                    updateHighScores()
+                    scoreupdated = true
                 }
 
                 canvas.drawText(
-                    scoretext,
-                    (screenWidth / 2) - paint.measureText(scoretext),
-                    screenHeight / 2.toFloat(),
-                    paint
+                        scoretext,
+                        (screenWidth / 2) - paint.measureText(scoretext),
+                        screenHeight / 2.toFloat(),
+                        paint
                 )
                 canvas.drawText(
-                    scoretitle,
-                    (screenWidth / 2) - paint.measureText(scoretitle),
-                    screenHeight / 2 - paint.textSize * 2,
-                    paint
+                        scoretitle,
+                        (screenWidth / 2) - paint.measureText(scoretitle),
+                        screenHeight / 2 - paint.textSize * 2,
+                        paint
                 )
             }
             4 -> {
@@ -650,16 +660,16 @@ class GameView(context: Context?) : View(context) {
                 scoretext = "Current Score: $playerscore"
                 scoretitle = "Flying to next level"
                 canvas.drawText(
-                    scoretext,
-                    (screenWidth / 2) - (paint.measureText(scoretext) / 2),
-                    screenHeight / 2.toFloat(),
-                    paint
+                        scoretext,
+                        (screenWidth / 2) - (paint.measureText(scoretext) / 2),
+                        screenHeight / 2.toFloat(),
+                        paint
                 )
                 canvas.drawText(
-                    scoretitle,
-                    (screenWidth / 2) - (paint.measureText(scoretitle) / 2),
-                    screenHeight / 2 - paint.textSize * 2,
-                    paint
+                        scoretitle,
+                        (screenWidth / 2) - (paint.measureText(scoretitle) / 2),
+                        screenHeight / 2 - paint.textSize * 2,
+                        paint
                 )
             }
         }
@@ -772,5 +782,5 @@ class GameView(context: Context?) : View(context) {
         scoreY = armor.height * 2.toFloat()
         runnable = Runnable { invalidate() } //runnable
     } // init
-} //Class GameView
+} //Class fi.ksoamk.potatosaucer3000.GameView
 
