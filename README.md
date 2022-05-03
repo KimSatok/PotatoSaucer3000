@@ -1,4 +1,6 @@
 # PotatoSaucer3000
-OAMK summer project 2021
+Ref 1 - A small summer game project
 
-A small summer game project for Oulu University of Applied Sciences
+Project done while studying in Oulu University of Applied Sciences
+
+Main takeaways of the project were deeper understanding of Kotlin and how to use canvas.
